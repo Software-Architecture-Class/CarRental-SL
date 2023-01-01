@@ -7,6 +7,7 @@ on:
     - release
     paths-ignore:
     - 'README.md'
+  workflow_dispatch:
 env:
   DOTNET_VERSION: '6.0.x'
   
@@ -27,17 +28,17 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
-        
-    - name: cache nuget packages
+            
     - uses: actions/cache@v2
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: |
           ${{ runner.os }}-nuget
-    - name: Install Nuget Package dependencies
-      #run: dotnet add package Newtonsoft.Json --version 12.0.1
+
+    - name: Install FE.SqlServer Nuget Package
       run: dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0.1
+    - name: Install FE.Tools Nuget Package
       run: dotnet add package Microsoft.EntityFrameworkCore.Tools --version 7.0.1
       
     - name: Install dependencies
