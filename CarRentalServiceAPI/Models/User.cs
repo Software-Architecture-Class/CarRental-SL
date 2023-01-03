@@ -12,6 +12,6 @@ namespace CarRentalServiceAPI.Models
         public string Address { get; set; } = string.Empty;
         public string CardNumber { get; set; } = string.Empty;
         public UserType userType { get; set; }
-        public DateTime? AccountCreationDate { get; set; }
+        public DateTime LastTimeModified { get; set; }
     }
 }

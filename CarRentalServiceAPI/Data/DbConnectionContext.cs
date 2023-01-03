@@ -23,9 +23,9 @@ namespace CarRentalServiceAPI.Data
             modelBuilder.Entity<AuthenticationCredentials>().ToTable("AuthenticationCredentials");           
         }
 
-        public DbSet<User>? Users { get; set; }
-        public DbSet<Car>? Cars { get; set; }
-        public DbSet<CarEvent>? CarEvents { get; set; }
-        public DbSet<AuthenticationCredentials>? AuthenticationCredentials { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<CarEvent> CarEvents { get; set; }
+        public DbSet<AuthenticationCredentials> AuthenticationCredentials { get; set; }
     }
 }

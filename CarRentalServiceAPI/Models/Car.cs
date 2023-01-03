@@ -20,6 +20,6 @@ namespace CarRentalServiceAPI.Models
         public Base64FormattingOptions Image { get; set; }
         public int ReleaseDate { get; set; }
         public int Popularity { get; set; } //how many times was it rent
-
+        public DateTime LastTimeModified { get; set; }
     }
 }

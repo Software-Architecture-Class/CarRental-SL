@@ -1,48 +1,83 @@
-﻿using CarRentalServiceAPI.Data.Dto;
+﻿using CarRentalServiceAPI.Data;
+using CarRentalServiceAPI.Data.Dto;
 using CarRentalServiceAPI.Models;
+using CarRentalServiceAPI.Repository;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 
 namespace CarRentalServiceAPI.Services
 {
     public class AccountService : IAccountService
-    {
-        private readonly User _user = new User();
-        private readonly AuthenticationCredentials _authenticationCredentials = new AuthenticationCredentials();
-        
+    {        
+        private readonly IAuthenticationCredentialsRepository _authenticationRepository;
+        private readonly IUserRepository _userRepository;
+
+        public AccountService(IAuthenticationCredentialsRepository authenticationRepository, IUserRepository userRepository)
+        {
+            _authenticationRepository = authenticationRepository;
+            _userRepository = userRepository;
+        }
+
         public async Task<User> RegisterAccount(AccountDto request)
-        {
-            if (!IsUsernameAvailable(request.UserName)) throw new BadHttpRequestException("Given Username is already used by another User");
-            InsertData(request);
+        {            
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            _authenticationCredentials.PasswordHash = passwordHash;
-            _authenticationCredentials.PasswordSalt = passwordSalt;
+            var newAuthenticationCredentials = new AuthenticationCredentials()
+            {
+                UserId = Guid.NewGuid().ToString(),
+                UserName = request.UserName,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt
+            };
+            await _authenticationRepository.Create(newAuthenticationCredentials);
 
-            return _user;
+            var newUser = new User()
+            {
+                userType = User.UserType.Client,
+                UserId = newAuthenticationCredentials.UserId,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Address = request.Address,
+                CardNumber = request.CardNumber,
+                LastTimeModified = DateTime.Now
+            };
+            await _userRepository.Create(newUser);
+
+            return newUser;
         }
 
-        public async Task<bool> DeleteAccount(string userName)
+        public async Task<bool> DeleteAccount(string userId)
         {
-            if (!IsUsernameAvailable(userName)) throw new BadHttpRequestException("There is no user with such username");
+            await _authenticationRepository.Delete(userId);
+            await _userRepository.Delete(userId);
 
             return true;
         }
-
-        private bool IsUsernameAvailable(string userName)
+            
+        //do poprawy 
+        private async Task<User> UpdateAccount(AccountDto data)
         {
-            return true;
-        }
+            var user = new User()
+            {
+                UserId = data.UserId,
+                FirstName = data.FirstName,
+                LastName = data.LastName,
+                Address = data.Address,
+                CardNumber = data.CardNumber,
+                LastTimeModified = DateTime.Now
+            };
+            await _userRepository.Update(user);
 
-        private void InsertData(AccountDto data)
-        {
-            _user.UserId = Guid.NewGuid().ToString();
-            _user.FirstName = data.FirstName;
-            _user.LastName = data.LastName;
-            _user.Address = data.Address;
-            _user.CardNumber = data.CardNumber;
-            _user.userType = User.UserType.Client;
-            _user.AccountCreationDate = DateTime.Now;
-            _authenticationCredentials.UserId = _user.UserId;
-            _authenticationCredentials.UserName = data.UserName;            
+            CreatePasswordHash(data.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            var authenticationCredentials = new AuthenticationCredentials()
+            {
+                UserName = data.UserName,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt
+            };            
+
+            return user;
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

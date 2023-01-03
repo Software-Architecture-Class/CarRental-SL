@@ -67,6 +67,9 @@ namespace CarRentalServiceAPI.Migrations
                     b.Property<int>("Image")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("LastTimeModified")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Popularity")
                         .HasColumnType("int");
 
@@ -140,9 +143,6 @@ namespace CarRentalServiceAPI.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("AccountCreationDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -158,6 +158,9 @@ namespace CarRentalServiceAPI.Migrations
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastTimeModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("userType")
                         .IsRequired()

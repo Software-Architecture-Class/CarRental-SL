@@ -8,13 +8,11 @@ namespace CarRentalServiceAPI.Controllers
     [Route("api/account")]
     [ApiController]
     public class AccountController : ControllerBase
-    {
-        private readonly ILogger<AccountController> _logger;
+    {        
         private readonly IAccountService _accountService;
 
-        public AccountController(ILogger<AccountController> logger, IAccountService accountService)
-        {
-            _logger = logger;
+        public AccountController(IAccountService accountService)
+        {            
             _accountService = accountService;
         }
 

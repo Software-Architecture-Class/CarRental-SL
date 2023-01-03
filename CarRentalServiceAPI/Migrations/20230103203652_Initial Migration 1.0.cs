@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarRentalServiceAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialMigration10 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,7 +62,8 @@ namespace CarRentalServiceAPI.Migrations
                     peopleCapacity = table.Column<int>(type: "int", nullable: false),
                     Image = table.Column<int>(type: "int", nullable: false),
                     ReleaseDate = table.Column<int>(type: "int", nullable: false),
-                    Popularity = table.Column<int>(type: "int", nullable: false)
+                    Popularity = table.Column<int>(type: "int", nullable: false),
+                    LastTimeModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,7 +80,7 @@ namespace CarRentalServiceAPI.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CardNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     userType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AccountCreationDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    LastTimeModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
