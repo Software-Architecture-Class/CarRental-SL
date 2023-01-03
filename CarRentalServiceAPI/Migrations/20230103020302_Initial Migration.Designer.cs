@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentalServiceAPI.Migrations
 {
     [DbContext(typeof(DbConnectionContext))]
-    [Migration("20230102151134_Initial Migration 1.2")]
-    partial class InitialMigration12
+    [Migration("20230103020302_Initial Migration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,30 @@ namespace CarRentalServiceAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CarRentalServiceAPI.Models.AuthenticationCredentials", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("AuthenticationCredentials", (string)null);
+                });
 
             modelBuilder.Entity("CarRentalServiceAPI.Models.Car", b =>
                 {
@@ -37,16 +61,10 @@ namespace CarRentalServiceAPI.Migrations
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CarCategory")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Drive")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GearboxType")
                         .HasColumnType("int");
 
                     b.Property<int>("Image")
@@ -64,12 +82,20 @@ namespace CarRentalServiceAPI.Migrations
                     b.Property<int>("ReleaseDate")
                         .HasColumnType("int");
 
+                    b.Property<string>("carCategory")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("gearboxType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("peopleCapacity")
                         .HasColumnType("int");
 
                     b.HasKey("CarId");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Cars", (string)null);
                 });
 
             modelBuilder.Entity("CarRentalServiceAPI.Models.CarEvent", b =>
@@ -81,8 +107,9 @@ namespace CarRentalServiceAPI.Migrations
                     b.Property<Guid>("CarId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Discount")
-                        .HasColumnType("int");
+                    b.Property<string>("Discount")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("DiscountPercentage")
                         .HasColumnType("float");
@@ -99,47 +126,49 @@ namespace CarRentalServiceAPI.Migrations
                     b.Property<double>("paidPrice")
                         .HasColumnType("float");
 
-                    b.Property<int>("rentType")
-                        .HasColumnType("int");
+                    b.Property<string>("rentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("startDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("TransactionId");
 
-                    b.ToTable("CarEvents");
+                    b.ToTable("CarEvents", (string)null);
                 });
 
             modelBuilder.Entity("CarRentalServiceAPI.Models.User", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("AccountCreationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CardNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("userType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserType")
-                        .HasColumnType("int");
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 #pragma warning restore 612, 618
         }
