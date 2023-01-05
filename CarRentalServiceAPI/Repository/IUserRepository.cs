@@ -9,5 +9,6 @@ namespace CarRentalServiceAPI.Repository
         public Task<bool> Update(User updatedUser);
         public Task<bool> Delete(string userId);
         public Task<User> Create(User newUser);
+        public Task<bool> Exists(string userId);
     }
 }

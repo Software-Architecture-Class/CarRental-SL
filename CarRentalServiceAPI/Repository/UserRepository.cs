@@ -57,14 +57,20 @@ namespace CarRentalServiceAPI.Repository
             if (user == null)
                 throw new BadHttpRequestException("User with such userId doesn't exist");
                         
-            user.FirstName = updatedUser.FirstName;
-            user.LastName = updatedUser.LastName;
-            user.Address = updatedUser.Address;
-            user.CardNumber = updatedUser.CardNumber;
-            user.LastTimeModified = updatedUser.LastTimeModified;
+            if(!string.IsNullOrEmpty(updatedUser.FirstName)) user.FirstName = updatedUser.FirstName;
+            if(!string.IsNullOrEmpty(updatedUser.LastName)) user.LastName = updatedUser.LastName;
+            if(!string.IsNullOrEmpty(updatedUser.Address)) user.Address = updatedUser.Address;
+            if(!string.IsNullOrEmpty(updatedUser.CardNumber)) user.CardNumber = updatedUser.CardNumber;
+            user.LastTimeModified = DateTime.Now;
+
             _context.SaveChanges();
 
             return true;
+        }
+
+        public async Task<bool> Exists(string userId)
+        {
+            return await _context.Users.FindAsync(userId) != null;
         }
     }
 }

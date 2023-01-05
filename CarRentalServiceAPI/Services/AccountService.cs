@@ -53,31 +53,30 @@ namespace CarRentalServiceAPI.Services
 
             return true;
         }
-            
-        //do poprawy 
-        private async Task<User> UpdateAccount(AccountDto data)
+               
+        public async Task<User> UpdateAccount(AccountDto data)
         {
-            var user = new User()
+            User newUser = new User();
+            AuthenticationCredentials newAuthenticationCredentials = new AuthenticationCredentials();
+            if(!string.IsNullOrEmpty(data.UserName)) newAuthenticationCredentials.UserName = data.UserName;
+            if(!string.IsNullOrEmpty(data.Password))
             {
-                UserId = data.UserId,
-                FirstName = data.FirstName,
-                LastName = data.LastName,
-                Address = data.Address,
-                CardNumber = data.CardNumber,
-                LastTimeModified = DateTime.Now
-            };
-            await _userRepository.Update(user);
+                CreatePasswordHash(data.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                newAuthenticationCredentials.PasswordHash = passwordHash;
+                newAuthenticationCredentials.PasswordSalt = passwordSalt;
+            }
+            if(!string.IsNullOrEmpty(data.FirstName)) newUser.FirstName = data.FirstName;
+            if(!string.IsNullOrEmpty(data.LastName)) newUser.LastName = data.LastName;
+            if(!string.IsNullOrEmpty(data.Address)) newUser.Address = data.Address;
+            if(!string.IsNullOrEmpty(data.CardNumber)) newUser.CardNumber = data.CardNumber;
 
-            CreatePasswordHash(data.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            newUser.UserId = data.UserId;
+            newAuthenticationCredentials.UserId = data.UserId;
 
-            var authenticationCredentials = new AuthenticationCredentials()
-            {
-                UserName = data.UserName,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt
-            };            
+            await _userRepository.Update(newUser);
+            await _authenticationRepository.Update(newAuthenticationCredentials);
 
-            return user;
+            return newUser;
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
