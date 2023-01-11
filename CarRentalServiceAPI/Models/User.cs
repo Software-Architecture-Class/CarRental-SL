@@ -1,15 +1,17 @@
-﻿namespace CarRentalServiceAPI.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace CarRentalServiceAPI.Models
 {
-    public enum UserType { Client, Admin }
+    [PrimaryKey(nameof(UserId))]    
     public class User
     {
-        public Guid UserId { get; set; }
-        public string? UserName { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? Address { get; set; }
-        public string? CardNumber { get; set; }
-        public UserType UserType { get; set; }
-        public DateTime? AccountCreationDate { get; set; }
+        public enum UserType { Client, Admin }
+        public string UserId { get; set; } = string.Empty;        
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
+        public string CardNumber { get; set; } = string.Empty;
+        public UserType userType { get; set; }
+        public DateTime LastTimeModified { get; set; }
     }
 }
