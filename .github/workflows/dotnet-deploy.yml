@@ -1,0 +1,41 @@
+name: Publish and Deploy Asp.NET Web Api Application
+
+on:
+  pull_request:
+    branches:
+      - Release
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: CarRentalServiceAPI
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal 
+    - name: Run the Publish
+      run: dotnet publish --configuration Release --no-restore --output ./publish      
+      
+
+    - name: FTP-Deploy-Action
+      uses: sebastianpopp/ftp-action@releases/v2
+      with:
+        host: ${{ secrets.FTP_HOSTNAME }}
+        user: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        localDir: CarRentalServiceAPI/publish
+        remoteDir: mainsite
