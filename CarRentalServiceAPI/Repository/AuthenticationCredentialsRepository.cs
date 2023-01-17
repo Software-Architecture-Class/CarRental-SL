@@ -38,7 +38,17 @@ namespace CarRentalServiceAPI.Repository
                 return false;
         }
 
-        public async Task<AuthenticationCredentials> ReadSingleOne(string userName)
+        public async Task<AuthenticationCredentials> ReadSingleOne(string userId)
+        {
+            var userCredentials = await _context.AuthenticationCredentials.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (userCredentials == null)
+                throw new BadHttpRequestException("There is no user with such userId");
+            else
+                return userCredentials;
+        }
+
+        public async Task<AuthenticationCredentials> GetDataByUserName(string userName)
         {
             var userCredentials = await _context.AuthenticationCredentials.FirstOrDefaultAsync(x => x.UserName == userName);
 

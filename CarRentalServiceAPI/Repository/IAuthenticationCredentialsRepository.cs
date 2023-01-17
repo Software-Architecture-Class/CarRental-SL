@@ -9,5 +9,7 @@ namespace CarRentalServiceAPI.Repository
         public Task<bool> Delete(string userId);
         public Task<bool> Update(AuthenticationCredentials credentials);
         public Task<bool> ChangeToken(string userId, string token);
+
+        public Task<AuthenticationCredentials> GetDataByUserName(string userName);
     }
 }

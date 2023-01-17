@@ -54,6 +54,19 @@ namespace CarRentalServiceAPI.Controllers
             var response = await _accountService.UpdateAccount(request);
 
             return Ok(response);
-        }        
+        }
+
+
+        /// <summary>
+        /// Returnns Generall Data of User's Account
+        /// </summary>        
+        [HttpGet()]
+        [ProducesResponseType(typeof(AccountDto),200)]
+        public async Task<IActionResult> GetAccount([FromQuery] string userId)
+        {
+            var accountData = await _accountService.GetUserData(userId);
+
+            return Ok(accountData);
+        }
     }
 }

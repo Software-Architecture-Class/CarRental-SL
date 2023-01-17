@@ -79,6 +79,24 @@ namespace CarRentalServiceAPI.Services
             return newUser;
         }
 
+        public async Task<AccountDto> GetUserData(string userId)
+        {
+            var userGenerallData = await _userRepository.ReadSingleOne(userId);
+            var userName = (await _authenticationRepository.ReadSingleOne(userId)).UserName;
+
+            var accountDto = new AccountDto()
+            {
+                UserName = userName,
+                UserId = userId,
+                FirstName = userGenerallData.FirstName,
+                LastName = userGenerallData.LastName,
+                Address = userGenerallData.Address,
+                CardNumber = userGenerallData.CardNumber,
+            };
+
+            return accountDto;
+        }
+
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using(var hmac = new HMACSHA512())

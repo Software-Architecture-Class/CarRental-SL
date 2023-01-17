@@ -20,7 +20,7 @@ namespace CarRentalServiceAPI.Services
 
         public async Task<string> LoginUser(string userName, string Password)
         {
-            var credentials = await _authenticationRepository.ReadSingleOne(userName);            
+            var credentials = await _authenticationRepository.GetDataByUserName(userName);            
                 
             if(!VerifyPasswordHash(Password, credentials.PasswordHash, credentials.PasswordSalt))
             {
