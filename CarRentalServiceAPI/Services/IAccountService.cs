@@ -8,5 +8,6 @@ namespace CarRentalServiceAPI.Services
         public Task<User> RegisterAccount(AccountDto request);
         public Task<bool> DeleteAccount(string UserId);
         public Task<User> UpdateAccount(AccountDto request);
+        public Task<AccountDto> GetUserData(string userId);
     }
 }
