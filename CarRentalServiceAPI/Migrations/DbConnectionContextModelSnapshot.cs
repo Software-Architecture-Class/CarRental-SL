@@ -28,9 +28,11 @@ namespace CarRentalServiceAPI.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Token")
@@ -69,6 +71,9 @@ namespace CarRentalServiceAPI.Migrations
 
                     b.Property<DateTime>("LastTimeModified")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Popularity")
                         .HasColumnType("int");

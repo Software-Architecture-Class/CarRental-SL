@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentalServiceAPI.Migrations
 {
     [DbContext(typeof(DbConnectionContext))]
-    [Migration("20230103203652_Initial Migration 1.0")]
-    partial class InitialMigration10
+    [Migration("20230118232842_Initial Migration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,9 +31,11 @@ namespace CarRentalServiceAPI.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Token")
@@ -72,6 +74,9 @@ namespace CarRentalServiceAPI.Migrations
 
                     b.Property<DateTime>("LastTimeModified")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Popularity")
                         .HasColumnType("int");

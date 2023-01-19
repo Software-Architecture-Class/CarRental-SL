@@ -9,6 +9,7 @@ namespace CarRentalServiceAPI.Models
         public enum GearboxType { Manual, Mechanic }
         public Guid CarId { get; set; }
         public string? Brand { get; set; }
+        public string? Model { get; set; }
         public int Power { get; set; }
         public int Acceleration { get; set; }//przyspieszenie
         public GearboxType gearboxType { get; set; }//rodzaj skrzyni biegów
