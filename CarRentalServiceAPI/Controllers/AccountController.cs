@@ -1,7 +1,6 @@
 ﻿using CarRentalServiceAPI.Data.Dto;
 using CarRentalServiceAPI.Models;
 using CarRentalServiceAPI.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 
@@ -24,7 +23,7 @@ namespace CarRentalServiceAPI.Controllers
         [HttpPost()]
         [ProducesResponseType(typeof(User), 200)]
         [Description("Create new user's account.")]
-        public async Task<IActionResult> Register([FromBody] AccountDto request)
+        public async Task<IActionResult> Register([FromForm] AccountDto request)
         {
             var response = await _accountService.RegisterAccount(request);
             
@@ -49,7 +48,7 @@ namespace CarRentalServiceAPI.Controllers
         /// </summary>
         [HttpPut()]
         [ProducesResponseType(typeof(User), 200)]
-        public async Task<IActionResult> UpdateAccount([FromBody] AccountDto request)
+        public async Task<IActionResult> UpdateAccount([FromForm] AccountDto request)
         {
             var response = await _accountService.UpdateAccount(request);
 

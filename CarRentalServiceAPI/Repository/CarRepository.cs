@@ -1,6 +1,8 @@
 ﻿using CarRentalServiceAPI.Data;
 using CarRentalServiceAPI.Data.Dto;
+using CarRentalServiceAPI.Data.Response;
 using CarRentalServiceAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarRentalServiceAPI.Repository
 {
@@ -13,30 +15,13 @@ namespace CarRentalServiceAPI.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<CarDto> Create(CarDto carDto, Base64FormattingOptions Image)
+        public async Task<bool> Create(Car newCar)
         {
-            var newCar = new Car()
-            {
-                CarId = Guid.NewGuid(),
-                Brand = carDto.Brand,
-                Model = carDto.Model,
-                Power = carDto.Power,
-                Acceleration = carDto.Acceleration,
-                gearboxType = carDto.gearboxType,
-                Drive = carDto.Drive,
-                carCategory = carDto.carCategory,
-                Description = carDto.Description,
-                Price = carDto.Price,
-                peopleCapacity = carDto.PeopleCapacity,
-                Image = Image,
-                ReleaseDate = carDto.ReleaseDate,
-                Popularity = 0,
-                LastTimeModified = DateTime.Now,
-            };
-
             await _dbContext.Cars.AddAsync(newCar);
 
-            return carDto;
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<bool> Delete(string carId)
@@ -47,30 +32,88 @@ namespace CarRentalServiceAPI.Repository
                 throw new BadHttpRequestException("There is no car witch such Id");
 
             _dbContext.Cars.Remove(car);
+            await _dbContext.SaveChangesAsync();
+
             return true;
         }
 
-        public async Task<CarDto> Get(string carId)
+        public async Task<Car> Get(string carId)
         {
-            var car = await _dbContext.Cars.FindAsync(carId);
-            if (car == null)
+            var carFromDb = await _dbContext.Cars.FindAsync(carId);
+            if (carFromDb == null)
                 throw new BadHttpRequestException("There is no car witch such Id");
 
-            return new CarDto()
-            {
-                //dodać pola
-            };
+            return carFromDb;
         }
 
-        public async Task<CarDto> Update(CarDto carDto)
+        public async Task<bool> Update(CarDto carDto)
         {            
             var currentCar = await _dbContext.Cars.FindAsync(carDto.CarId);
             if (currentCar == null)
                 throw new BadHttpRequestException("There is no car with such Id.");
 
-            //dodać logikę updatowania danych aut
+            if (!string.IsNullOrEmpty(carDto.Brand)) currentCar.Brand = carDto.Brand;
+            if (!string.IsNullOrEmpty(carDto.Model)) currentCar.Model = carDto.Model;
+            if (carDto.Power != null) currentCar.Power = carDto.Power.Value;
+            if (carDto.Acceleration != null) currentCar.Acceleration = carDto.Acceleration.Value;
+            if (carDto.gearboxType != null) currentCar.gearboxType = carDto.gearboxType.Value;
+            if (carDto.Drive != null) currentCar.Drive = carDto.Drive.Value;
+            if (carDto.Description != null) currentCar.Description = carDto.Description;
+            if (carDto.carCategory != null) currentCar.carCategory = carDto.carCategory.Value;
+            if (string.IsNullOrEmpty(carDto.Description)) currentCar.Description = carDto.Description;
+            if (carDto.Price != null) currentCar.Price = carDto.Price.Value;
+            if (carDto.PeopleCapacity != null) currentCar.peopleCapacity = carDto.PeopleCapacity.Value;
+            if (carDto.Image != null)
+            {
+                var carImage = carDto.Image;
+                var base64VersionImage = string.Empty;
+                using (var ms = new MemoryStream())
+                {
+                    carImage.CopyTo(ms);
+                    var imageBytes = ms.ToArray();
+                    base64VersionImage = Convert.ToBase64String(imageBytes);
+                }
+                currentCar.Image = base64VersionImage;
+                currentCar.ImageTitle = carImage.FileName;
+            }
+            if (carDto.ReleaseDate != null) currentCar.ReleaseDate = carDto.ReleaseDate.Value;
+            currentCar.LastTimeModified = DateTime.Now;
 
-            return carDto;
+            _dbContext.SaveChanges();
+
+            return true;
         }
+
+        public async Task<List<CarResponse>> GetAll()
+        {
+            var carsList = (await _dbContext.Cars.ToArrayAsync()).ToList();
+
+            var carsResponseList = new List<CarResponse>();
+            foreach(var Car in carsList)
+            {
+                var carResponse = new CarResponse()
+                {
+                    CarId = Car.CarId,
+                    Brand = Car.Brand,
+                    Model = Car.Model,
+                    Power = Car.Power,
+                    Acceleration = Car.Acceleration,
+                    gearboxType = Car.gearboxType,
+                    Drive = Car.Drive,
+                    carCategory = Car.carCategory,
+                    Description = Car.Description,
+                    Price = Car.Price,
+                    peopleCapacity = Car.peopleCapacity,
+                    Image = Car.Image,
+                    ReleaseDate = Car.ReleaseDate,
+                    Popularity = Car.Popularity,
+                };
+
+                carsResponseList.Add(carResponse);
+            }
+
+            return carsResponseList;
+        }
+
     }
 }

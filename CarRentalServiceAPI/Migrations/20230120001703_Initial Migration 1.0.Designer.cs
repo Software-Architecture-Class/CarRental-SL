@@ -4,6 +4,7 @@ using CarRentalServiceAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentalServiceAPI.Migrations
 {
     [DbContext(typeof(DbConnectionContext))]
-    partial class DbConnectionContextModelSnapshot : ModelSnapshot
+    [Migration("20230120001703_Initial Migration 1.0")]
+    partial class InitialMigration10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,49 +56,52 @@ namespace CarRentalServiceAPI.Migrations
                     b.Property<string>("CarId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("Acceleration")
+                    b.Property<int>("Acceleration")
                         .HasColumnType("int");
 
                     b.Property<string>("Brand")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Drive")
+                    b.Property<int>("Drive")
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageTitle")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastTimeModified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Model")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Popularity")
+                    b.Property<int>("Popularity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Power")
+                    b.Property<int>("Power")
                         .HasColumnType("int");
 
-                    b.Property<double?>("Price")
+                    b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int?>("ReleaseDate")
+                    b.Property<int>("ReleaseDate")
                         .HasColumnType("int");
 
                     b.Property<string>("carCategory")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("gearboxType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("peopleCapacity")
+                    b.Property<int>("peopleCapacity")
                         .HasColumnType("int");
 
                     b.HasKey("CarId");

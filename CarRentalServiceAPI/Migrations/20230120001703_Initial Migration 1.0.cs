@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarRentalServiceAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialMigration10 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,18 +50,18 @@ namespace CarRentalServiceAPI.Migrations
                 name: "Cars",
                 columns: table => new
                 {
-                    CarId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CarId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Power = table.Column<int>(type: "int", nullable: false),
                     Acceleration = table.Column<int>(type: "int", nullable: false),
                     gearboxType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Drive = table.Column<int>(type: "int", nullable: false),
                     carCategory = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     peopleCapacity = table.Column<int>(type: "int", nullable: false),
-                    Image = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReleaseDate = table.Column<int>(type: "int", nullable: false),
                     Popularity = table.Column<int>(type: "int", nullable: false),
                     LastTimeModified = table.Column<DateTime>(type: "datetime2", nullable: false)
