@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentalServiceAPI.Migrations
 {
     [DbContext(typeof(DbConnectionContext))]
-    [Migration("20230103203652_Initial Migration 1.0")]
-    partial class InitialMigration10
+    [Migration("20230120003305_Initial Migration 1.1")]
+    partial class InitialMigration11
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,9 +31,11 @@ namespace CarRentalServiceAPI.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Token")
@@ -51,27 +53,37 @@ namespace CarRentalServiceAPI.Migrations
 
             modelBuilder.Entity("CarRentalServiceAPI.Models.Car", b =>
                 {
-                    b.Property<Guid>("CarId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CarId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Acceleration")
                         .HasColumnType("int");
 
                     b.Property<string>("Brand")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Drive")
                         .HasColumnType("int");
 
-                    b.Property<int>("Image")
-                        .HasColumnType("int");
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastTimeModified")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Popularity")
                         .HasColumnType("int");

@@ -72,5 +72,6 @@ namespace CarRentalServiceAPI.Repository
         {
             return await _context.Users.FindAsync(userId) != null;
         }
+        
     }
 }
