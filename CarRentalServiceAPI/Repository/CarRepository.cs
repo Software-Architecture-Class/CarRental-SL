@@ -63,6 +63,7 @@ namespace CarRentalServiceAPI.Repository
             if (string.IsNullOrEmpty(carDto.Description)) currentCar.Description = carDto.Description;
             if (carDto.Price != null) currentCar.Price = carDto.Price.Value;
             if (carDto.PeopleCapacity != null) currentCar.peopleCapacity = carDto.PeopleCapacity.Value;
+            if (carDto.EngineCapacity != null) currentCar.EngineCapacity = carDto.EngineCapacity.Value;
             if (carDto.Image != null)
             {
                 var carImage = carDto.Image;
@@ -74,7 +75,6 @@ namespace CarRentalServiceAPI.Repository
                     base64VersionImage = Convert.ToBase64String(imageBytes);
                 }
                 currentCar.Image = base64VersionImage;
-                currentCar.ImageTitle = carImage.FileName;
             }
             if (carDto.ReleaseDate != null) currentCar.ReleaseDate = carDto.ReleaseDate.Value;
             currentCar.LastTimeModified = DateTime.Now;

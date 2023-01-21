@@ -44,7 +44,7 @@ namespace CarRentalServiceAPI.Services
                 ReleaseDate = carDto.ReleaseDate,
                 Popularity = 0,
                 LastTimeModified = DateTime.Now,
-                ImageTitle = carImage?.FileName
+                EngineCapacity = carDto.EngineCapacity,
             };
 
             await _carRepository.Create(newCar);

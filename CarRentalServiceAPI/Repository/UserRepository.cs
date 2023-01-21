@@ -59,8 +59,9 @@ namespace CarRentalServiceAPI.Repository
                         
             if(!string.IsNullOrEmpty(updatedUser.FirstName)) user.FirstName = updatedUser.FirstName;
             if(!string.IsNullOrEmpty(updatedUser.LastName)) user.LastName = updatedUser.LastName;
-            if(!string.IsNullOrEmpty(updatedUser.Address)) user.Address = updatedUser.Address;
+            if(!string.IsNullOrEmpty(updatedUser.EmailAddress)) user.EmailAddress = updatedUser.EmailAddress;
             if(!string.IsNullOrEmpty(updatedUser.CardNumber)) user.CardNumber = updatedUser.CardNumber;
+            if(!string.IsNullOrEmpty(updatedUser.PhoneNumber)) user.PhoneNumber = updatedUser.PhoneNumber;
             user.LastTimeModified = DateTime.Now;
 
             _context.SaveChanges();

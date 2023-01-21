@@ -30,16 +30,17 @@ namespace CarRentalServiceAPI.Migrations
                 name: "CarEvents",
                 columns: table => new
                 {
-                    TransactionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CarId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TransactionId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CarId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     startDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     finishDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    paidPrice = table.Column<double>(type: "float", nullable: false),
-                    Rate = table.Column<int>(type: "int", nullable: false),
-                    DiscountPercentage = table.Column<double>(type: "float", nullable: false),
-                    Discount = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    rentType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    paidPrice = table.Column<double>(type: "float", nullable: true),
+                    Rate = table.Column<int>(type: "int", nullable: true),
+                    DiscountPercentage = table.Column<double>(type: "float", nullable: true),
+                    Discount = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    rentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastTimeModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,19 +52,20 @@ namespace CarRentalServiceAPI.Migrations
                 columns: table => new
                 {
                     CarId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Power = table.Column<int>(type: "int", nullable: false),
-                    Acceleration = table.Column<int>(type: "int", nullable: false),
-                    gearboxType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Drive = table.Column<int>(type: "int", nullable: false),
-                    carCategory = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    peopleCapacity = table.Column<int>(type: "int", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReleaseDate = table.Column<int>(type: "int", nullable: false),
-                    Popularity = table.Column<int>(type: "int", nullable: false),
+                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Power = table.Column<int>(type: "int", nullable: true),
+                    Acceleration = table.Column<double>(type: "float", nullable: true),
+                    EngineCapacity = table.Column<double>(type: "float", nullable: true),
+                    gearboxType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Drive = table.Column<int>(type: "int", nullable: true),
+                    carCategory = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<double>(type: "float", nullable: true),
+                    peopleCapacity = table.Column<int>(type: "int", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReleaseDate = table.Column<int>(type: "int", nullable: true),
+                    Popularity = table.Column<int>(type: "int", nullable: true),
                     LastTimeModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -76,12 +78,13 @@ namespace CarRentalServiceAPI.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CardNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    userType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastTimeModified = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CardNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    userType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastTimeModified = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
