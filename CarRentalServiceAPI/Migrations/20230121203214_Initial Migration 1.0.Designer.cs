@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentalServiceAPI.Migrations
 {
     [DbContext(typeof(DbConnectionContext))]
-    [Migration("20230120003305_Initial Migration 1.1")]
-    partial class InitialMigration11
+    [Migration("20230121203214_Initial Migration 1.0")]
+    partial class InitialMigration10
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,56 +56,49 @@ namespace CarRentalServiceAPI.Migrations
                     b.Property<string>("CarId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Acceleration")
-                        .HasColumnType("int");
+                    b.Property<double?>("Acceleration")
+                        .HasColumnType("float");
 
                     b.Property<string>("Brand")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Drive")
+                    b.Property<int?>("Drive")
                         .HasColumnType("int");
 
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double?>("EngineCapacity")
+                        .HasColumnType("float");
 
-                    b.Property<string>("ImageTitle")
-                        .IsRequired()
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastTimeModified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Model")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Popularity")
+                    b.Property<int?>("Popularity")
                         .HasColumnType("int");
 
-                    b.Property<int>("Power")
+                    b.Property<int?>("Power")
                         .HasColumnType("int");
 
-                    b.Property<double>("Price")
+                    b.Property<double?>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int>("ReleaseDate")
+                    b.Property<int?>("ReleaseDate")
                         .HasColumnType("int");
 
                     b.Property<string>("carCategory")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("gearboxType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("peopleCapacity")
+                    b.Property<int?>("peopleCapacity")
                         .HasColumnType("int");
 
                     b.HasKey("CarId");
@@ -115,34 +108,34 @@ namespace CarRentalServiceAPI.Migrations
 
             modelBuilder.Entity("CarRentalServiceAPI.Models.CarEvent", b =>
                 {
-                    b.Property<Guid>("TransactionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("TransactionId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("CarId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Discount")
-                        .IsRequired()
+                    b.Property<string>("CarId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("DiscountPercentage")
+                    b.Property<string>("Discount")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("DiscountPercentage")
                         .HasColumnType("float");
 
-                    b.Property<int>("Rate")
+                    b.Property<DateTime>("LastTimeModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Rate")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("finishDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("paidPrice")
+                    b.Property<double?>("paidPrice")
                         .HasColumnType("float");
 
                     b.Property<string>("rentType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("startDate")
@@ -158,27 +151,25 @@ namespace CarRentalServiceAPI.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Address")
-                        .IsRequired()
+                    b.Property<string>("CardNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CardNumber")
-                        .IsRequired()
+                    b.Property<string>("EmailAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("LastTimeModified")
+                    b.Property<DateTime?>("LastTimeModified")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("userType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");

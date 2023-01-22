@@ -37,7 +37,8 @@ namespace CarRentalServiceAPI.Services
                 UserId = newAuthenticationCredentials.UserId,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                Address = request.Address,
+                EmailAddress = request.EmailAddress,
+                PhoneNumber = request.PhoneNumber,
                 CardNumber = request.CardNumber,
                 LastTimeModified = DateTime.Now
             };
@@ -67,8 +68,9 @@ namespace CarRentalServiceAPI.Services
             }
             if(!string.IsNullOrEmpty(data.FirstName)) newUser.FirstName = data.FirstName;
             if(!string.IsNullOrEmpty(data.LastName)) newUser.LastName = data.LastName;
-            if(!string.IsNullOrEmpty(data.Address)) newUser.Address = data.Address;
+            if(!string.IsNullOrEmpty(data.EmailAddress)) newUser.EmailAddress = data.EmailAddress;
             if(!string.IsNullOrEmpty(data.CardNumber)) newUser.CardNumber = data.CardNumber;
+            if(!string.IsNullOrEmpty(data.PhoneNumber)) newUser.PhoneNumber = data.PhoneNumber;
 
             newUser.UserId = data.UserId;
             newAuthenticationCredentials.UserId = data.UserId;
@@ -90,7 +92,8 @@ namespace CarRentalServiceAPI.Services
                 UserId = userId,
                 FirstName = userGenerallData.FirstName,
                 LastName = userGenerallData.LastName,
-                Address = userGenerallData.Address,
+                EmailAddress = userGenerallData.EmailAddress,
+                PhoneNumber = userGenerallData.PhoneNumber,
                 CardNumber = userGenerallData.CardNumber,
             };
 
