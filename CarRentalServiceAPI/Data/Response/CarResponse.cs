@@ -20,6 +20,7 @@ namespace CarRentalServiceAPI.Data.Response
         public int? ReleaseDate { get; set; }
         public int? Popularity { get; set; } //how many times was it rent
         public double? EngineCapacity { get; set; }
+        public double? TimeForm0To100 { get; set; }
 
     }
 }

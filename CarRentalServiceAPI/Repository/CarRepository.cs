@@ -64,6 +64,7 @@ namespace CarRentalServiceAPI.Repository
             if (carDto.Price != null) currentCar.Price = carDto.Price.Value;
             if (carDto.PeopleCapacity != null) currentCar.peopleCapacity = carDto.PeopleCapacity.Value;
             if (carDto.EngineCapacity != null) currentCar.EngineCapacity = carDto.EngineCapacity.Value;
+            if (carDto.TimeFrom0To100 != null) currentCar.TimeFrom0To100 = carDto.TimeFrom0To100.Value;
             if (carDto.Image != null)
             {
                 var carImage = carDto.Image;
@@ -107,6 +108,8 @@ namespace CarRentalServiceAPI.Repository
                     Image = Car.Image,
                     ReleaseDate = Car.ReleaseDate,
                     Popularity = Car.Popularity,
+                    EngineCapacity = Car.EngineCapacity,
+                    TimeForm0To100 = Car.TimeFrom0To100
                 };
 
                 carsResponseList.Add(carResponse);

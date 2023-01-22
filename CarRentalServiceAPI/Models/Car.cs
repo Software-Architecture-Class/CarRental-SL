@@ -13,6 +13,7 @@ namespace CarRentalServiceAPI.Models
         public string? Model { get; set; } = string.Empty;
         public int? Power { get; set; } = 0;
         public double? Acceleration { get; set; } = 0;//przyspieszenie
+        public double? TimeFrom0To100 { get; set; } = 0;
         public double? EngineCapacity { get; set; } = 0;//pojemność silnika        
         public GearboxType? gearboxType { get; set; }//rodzaj skrzyni biegów
         public DriveType? Drive { get; set; } //napęd
