@@ -21,5 +21,6 @@ namespace CarRentalServiceAPI.Data.Dto
         public int? PeopleCapacity { get; set; }       
         public int? ReleaseDate { get; set; }  
         public IFormFile? Image { get; set; }
+        public double? TimeFrom0To100 { get; set; }
     }
 }

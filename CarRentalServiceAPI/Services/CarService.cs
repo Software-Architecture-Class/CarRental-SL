@@ -45,6 +45,7 @@ namespace CarRentalServiceAPI.Services
                 Popularity = 0,
                 LastTimeModified = DateTime.Now,
                 EngineCapacity = carDto.EngineCapacity,
+                TimeFrom0To100 = carDto.TimeFrom0To100,
             };
 
             await _carRepository.Create(newCar);
@@ -75,6 +76,8 @@ namespace CarRentalServiceAPI.Services
                 ReleaseDate=carFromDb.ReleaseDate,
                 Image = carFromDb.Image,
                 Popularity=carFromDb.Popularity,
+                EngineCapacity=carFromDb.EngineCapacity,
+                TimeForm0To100 = carFromDb.TimeFrom0To100
             };
 
             return carResponse;
